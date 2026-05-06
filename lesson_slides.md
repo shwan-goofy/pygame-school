@@ -33,6 +33,18 @@ paginate: true
 
 ---
 
+## 준비 — 수업 자료 다운로드
+
+먼저 아래 주소에서 수업 파일을 다운로드하세요.
+
+**https://github.com/shwan-goofy/pygame-school**
+
+1. 초록색 **Code** 버튼 클릭
+2. **Download ZIP** 클릭
+3. 압축 해제 후 폴더 안으로 이동
+
+---
+
 ## 환경 확인 (Windows CMD)
 
 ```cmd
