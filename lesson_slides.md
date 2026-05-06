@@ -120,6 +120,22 @@ print(type(my_score))
 
 ---
 
+## 정답 — 실습 A
+
+```python
+my_name = "홍길동"
+my_age = 17
+my_score = 99.5
+is_winner = True
+
+print(my_name, "나이:", my_age)
+print(type(my_name))    # <class 'str'>
+print(type(my_age))     # <class 'int'>
+print(type(my_score))   # <class 'float'>
+```
+
+---
+
 ## 산술 연산자
 
 ```python
@@ -157,23 +173,113 @@ player_x += SPEED   # 위와 같음
 
 ## 실습 B — 연산자 계산
 
-빈칸을 채워서 이동 거리를 계산하세요.
+빈칸을 채워서 점수를 계산하세요.
 
 ```python
-x = 300
-speed = 5
+score = 0
+bonus = 10
 
-# 왼쪽으로 2번 이동하면?
-x = x - speed
-x = x - speed
-print("2번 왼쪽 이동 후 x:", x)   # 290이 출력되어야 함
+score += bonus        # 동전 1개 획득
+score += bonus        # 동전 2개 획득
+score += bonus        # 동전 3개 획득
+print("현재 점수:", score)   # 30이 출력되어야 함
 
-# 오른쪽으로 3번 이동하면?
-x ___ speed
-x ___ speed
-x ___ speed
-print("3번 오른쪽 이동 후 x:", _____)  # 305가 출력되어야 함
+score -= 5            # 패널티
+print("패널티 후 점수:", _____)   # 25가 출력되어야 함
 ```
+
+---
+
+## 정답 — 실습 B
+
+```python
+score = 0
+bonus = 10
+
+score += bonus
+score += bonus
+score += bonus
+print("현재 점수:", score)    # 30
+
+score -= 5
+print("패널티 후 점수:", score)   # 25
+```
+
+---
+
+## random 모듈 — 무작위 숫자 만들기
+
+게임에서 동전과 장애물이 **랜덤한 위치**에 나타나는 이유입니다.
+
+```python
+import random   # 맨 위에 한 번만 쓰면 됩니다
+
+# 1 이상 6 이하의 정수 하나를 랜덤으로 선택 (주사위)
+result = random.randint(1, 6)
+print(result)    # 실행할 때마다 다른 숫자
+
+# 리스트에서 하나를 랜덤으로 선택
+fruits = ["사과", "바나나", "딸기"]
+pick = random.choice(fruits)
+print(pick)      # 실행할 때마다 다른 과일
+```
+
+---
+
+## 게임에서 random이 쓰이는 곳
+
+동전과 장애물이 항상 같은 자리에 떨어지면 재미없겠죠?
+
+```python
+import random
+
+WIDTH = 600
+
+# 동전이 리셋될 때 — 32~568 사이 랜덤 위치
+coin.x = random.randint(32, WIDTH - 32)
+coin.y = 0
+
+# 장애물도 마찬가지
+obstacle.x = random.randint(32, WIDTH - 32)
+obstacle.y = 0
+```
+
+> `32` 를 왼쪽 한계, `WIDTH - 32` 를 오른쪽 한계로 쓰는 이유는  
+> 캐릭터 이미지 크기(64px)의 절반이 화면 밖으로 나가지 않게 하기 위해서입니다.
+
+---
+
+## 실습 D — random 주사위
+
+아래 코드를 완성해서 주사위를 2번 굴리고 합계를 출력하세요.
+
+```python
+import random
+
+dice1 = random.randint(___, ___)   # 1~6 사이 랜덤
+dice2 = random.randint(___, ___)   # 1~6 사이 랜덤
+
+total = dice1 + dice2
+print(f"주사위 1: {dice1}, 주사위 2: {dice2}")
+print(f"합계: {total}")
+```
+
+---
+
+## 정답 — 실습 D
+
+```python
+import random
+
+dice1 = random.randint(1, 6)
+dice2 = random.randint(1, 6)
+
+total = dice1 + dice2
+print(f"주사위 1: {dice1}, 주사위 2: {dice2}")
+print(f"합계: {total}")
+```
+
+실행할 때마다 다른 결과가 나옵니다!
 
 ---
 
@@ -214,10 +320,18 @@ score = 0
 print(f"___ 의 현재 점수: ___점")
 ```
 
-**정답:**
+---
+
+## 정답 — 실습 C
+
 ```python
+player = "나"
+score = 0
+
 print(f"{player} 의 현재 점수: {score}점")
 ```
+
+출력: `나 의 현재 점수: 0점`
 
 ---
 
@@ -242,6 +356,56 @@ x = 300              # x 상자에 300을 넣음
 ```python
 score = score + 10   # score를 꺼내서 10을 더하고 다시 넣음
 print(score)         # 10 출력
+```
+
+---
+
+## input() 함수 — 사용자에게 값 받기
+
+변수에 직접 값을 넣는 대신, **키보드로 입력**받을 수 있습니다.
+
+```python
+name = input("이름을 입력하세요: ")   # 키보드로 입력한 값이 name에 저장
+print(f"안녕하세요, {name}!")
+```
+
+실행하면 프로그램이 멈추고 입력을 기다립니다.  
+입력 후 Enter를 누르면 계속 실행됩니다.
+
+---
+
+## input() 주의사항 — 자료형 변환
+
+`input()` 은 항상 **문자열(str)** 로 반환합니다.  
+숫자 계산을 하려면 `int()` 또는 `float()` 으로 변환해야 합니다.
+
+```python
+# 잘못된 예 — 문자열 + 숫자는 오류 발생
+age = input("나이: ")    # "17" 처럼 문자열로 저장됨
+print(age + 1)           # TypeError: 오류!
+
+# 올바른 예 — int()로 변환
+age = int(input("나이: "))   # "17" → 17 (정수)
+print(age + 1)               # 18 출력
+```
+
+---
+
+## 실습 — input() 사용
+
+아래 코드를 완성해서 이름과 점수를 입력받아 출력하세요.
+
+```python
+name = input("플레이어 이름: ")
+score = int(input("현재 점수: "))
+
+print(f"{name} 님의 점수는 {score}점입니다.")
+
+# 점수가 50점 이상이면 "통과!", 아니면 "다시 도전!"
+if score >= 50:
+    print("통과!")
+else:
+    print("다시 도전!")
 ```
 
 ---
@@ -329,15 +493,20 @@ player.x = ___________________
 
 **힌트:** `WIDTH = 600` 이므로 `WIDTH // 2 = 300`
 
-**정답:**
-```python
-player.x = WIDTH // 2
-```
-
 저장 후 실행해 보세요:
 ```cmd
 python game1_skeleton.py
 ```
+
+---
+
+## 정답 — 실습 1
+
+```python
+player.x = WIDTH // 2   # 300
+```
+
+캐릭터가 화면 정중앙에 나타나면 성공입니다!
 
 ---
 
@@ -407,6 +576,99 @@ score == 10      # 비교 (= 두 개) → True
 
 ---
 
+## 논리 연산자 — 조건 여러 개 연결하기
+
+조건 하나로 부족할 때 여러 조건을 묶습니다.
+
+```python
+# and — 둘 다 참일 때만 참
+x = 5
+print(x > 0 and x < 10)   # True  (0보다 크고 10보다 작음)
+print(x > 0 and x > 10)   # False (두 번째 조건이 거짓)
+
+# or — 하나라도 참이면 참
+print(x < 0 or x > 3)     # True  (두 번째 조건이 참)
+print(x < 0 or x > 10)    # False (둘 다 거짓)
+
+# not — 참/거짓 뒤집기
+game_over = False
+print(not game_over)       # True
+```
+
+---
+
+## 논리 연산자 진리표
+
+| 조건 A | 조건 B | A and B | A or B |
+|--------|--------|---------|--------|
+| True   | True   | True    | True   |
+| True   | False  | False   | True   |
+| False  | True   | False   | True   |
+| False  | False  | False   | False  |
+
+---
+
+## 게임에서 논리 연산자가 쓰이는 곳
+
+```python
+# 플레이어가 왼쪽 경계 안쪽에 있을 때만 왼쪽으로 이동 허용
+if keyboard.left and player.x > 32:
+    player.x -= SPEED
+
+# 게임 오버가 아니고 점수가 50 이상이면 난이도 증가
+if not game_over and score >= 50:
+    difficulty_multiplier = 1.5
+
+# R 또는 Enter를 누르면 재시작
+if keyboard.r or keyboard.return_key:
+    reset_game()
+```
+
+---
+
+## 실습 — 논리 연산자
+
+빈칸을 채워서 조건을 완성하세요.
+
+```python
+score = 75
+lives = 2
+game_over = False
+
+# 1. 점수가 50 이상이고, 목숨이 남아있으면 "계속 진행!"
+if score >= 50 ___ lives > 0:
+    print("계속 진행!")
+
+# 2. 게임 오버가 아닌 상태
+if ___ game_over:
+    print("게임 진행 중")
+
+# 3. 점수가 100 이상이거나 목숨이 0이면 게임 종료
+if score >= 100 ___ lives == 0:
+    print("게임 종료")
+```
+
+---
+
+## 정답 — 논리 연산자
+
+```python
+score = 75
+lives = 2
+game_over = False
+
+if score >= 50 and lives > 0:
+    print("계속 진행!")
+
+if not game_over:
+    print("게임 진행 중")
+
+if score >= 100 or lives == 0:
+    print("게임 종료")
+```
+
+---
+
 ## 실습 2 — 조건문 작성
 
 점수에 따라 다른 메시지를 출력하는 코드를 완성하세요.
@@ -422,8 +684,13 @@ else:
     print("아직 50점 미만, 계속 도전!")
 ```
 
-**정답:**
+---
+
+## 정답 — 실습 2
+
 ```python
+score = 75
+
 if score >= 100:
     print("대단해! 100점 이상!")
 elif score >= 50:
@@ -431,6 +698,8 @@ elif score >= 50:
 else:
     print("아직 50점 미만, 계속 도전!")
 ```
+
+`score = 75` 이므로 "잘 하고 있어! 50점 이상!" 이 출력됩니다.
 
 ---
 
@@ -572,26 +841,21 @@ python game1_skeleton.py
 같은 코드를 여러 번 쓰지 않고 묶어서 이름을 붙입니다.
 
 ```python
-# 함수 없이
-print("=====")
-print("안녕!")
-print("=====")
+# 함수 없이 — 점수를 올릴 때마다 같은 코드를 반복
+score = score + 10
+print(f"점수 획득! 현재: {score}")
 
-print("=====")   # 또 써야 함...
-print("잘 가!")
-print("=====")
+score = score + 10
+print(f"점수 획득! 현재: {score}")
 
-# 함수로 묶으면
-def 구분선():
-    print("=====")
+# 함수로 묶으면 — 한 번만 정의하고 여러 번 호출
+def add_score():
+    global score
+    score = score + 10
+    print(f"점수 획득! 현재: {score}")
 
-구분선()   # 함수 호출
-print("안녕!")
-구분선()
-
-구분선()
-print("잘 가!")
-구분선()
+add_score()   # 한 줄로 끝
+add_score()
 ```
 
 ---
@@ -686,13 +950,19 @@ print(max_value(10, 20))   # 20 출력
 print(max_value(99, 3))    # 99 출력
 ```
 
-**정답:**
+---
+
+## 정답 — 실습 5
+
 ```python
 def max_value(a, b):
     if a > b:
         return a
     else:
         return b
+
+print(max_value(10, 20))   # 20
+print(max_value(99, 3))    # 99
 ```
 
 ---
@@ -779,14 +1049,114 @@ for i in range(_____________________):
 print("합계:", total)   # 합계: 15 가 출력되어야 함
 ```
 
-**정답:**
+---
+
+## 정답 — 실습 6
+
 ```python
 total = 0
 
 for i in range(1, 6):
     total += i
 
-print("합계:", total)
+print("합계:", total)   # 합계: 15
+```
+
+---
+
+## while 반복문 — 조건이 참인 동안 계속 반복
+
+`for` 는 횟수가 정해진 반복, `while` 은 **조건이 참인 동안** 계속합니다.
+
+```python
+# for 반복 — 5번 정해진 횟수
+for i in range(5):
+    print(i)   # 0, 1, 2, 3, 4
+
+# while 반복 — 조건이 거짓이 될 때까지
+count = 0
+while count < 5:
+    print(count)   # 0, 1, 2, 3, 4
+    count += 1     # 이 줄 없으면 무한 루프!
+```
+
+---
+
+## while 반복문 구조
+
+```python
+while 조건:
+    실행할 코드
+    # 반드시 조건이 언젠가 거짓이 되도록 해야 함!
+```
+
+### break — 반복 중간에 탈출
+
+```python
+score = 0
+while True:            # 조건이 항상 True → 무한 반복
+    score += 10
+    print(f"점수: {score}")
+    if score >= 30:
+        break          # score가 30이 되면 반복 종료
+
+print("게임 종료!")
+```
+
+---
+
+## for vs while — 언제 쓸까?
+
+| 상황 | 추천 |
+|------|------|
+| 횟수가 정해진 경우 (`3번 반복`) | `for` |
+| 리스트를 순회하는 경우 | `for` |
+| 조건이 만족될 때까지 반복 | `while` |
+| 게임이 끝날 때까지 계속 | `while` |
+
+**Pygame Zero의 게임 루프도 내부적으로 `while True:` 입니다!**  
+`pgzrun.go()` 가 "게임이 끝나지 않는 한 계속 draw/update 호출"을 담당합니다.
+
+---
+
+## 실습 — while 반복문
+
+빈칸을 채워서 점수가 50점이 될 때까지 동전을 먹는 코드를 완성하세요.
+
+```python
+score = 0
+coin_value = 10
+
+while _____________________:   # 점수가 50 미만인 동안
+    score += coin_value
+    print(f"동전 획득! 현재 점수: {score}")
+
+print(f"목표 달성! 최종 점수: {score}")
+```
+
+---
+
+## 정답 — while 반복문
+
+```python
+score = 0
+coin_value = 10
+
+while score < 50:
+    score += coin_value
+    print(f"동전 획득! 현재 점수: {score}")
+
+print(f"목표 달성! 최종 점수: {score}")
+```
+
+출력 결과:
+```
+동전 획득! 현재 점수: 10
+동전 획득! 현재 점수: 20
+동전 획득! 현재 점수: 30
+동전 획득! 현재 점수: 40
+동전 획득! 현재 점수: 50
+목표 달성! 최종 점수: 50
 ```
 
 ---
